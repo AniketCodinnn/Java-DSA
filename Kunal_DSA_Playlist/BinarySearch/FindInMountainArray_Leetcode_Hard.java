@@ -21,7 +21,7 @@ public class FindInMountainArray_Leetcode_Hard {
     static int peakIndexInMountainArray(int[] arr){
         int start = 0;
         int end = arr.length -1;
-        while(start < end){
+        while(start < end){        // if the = condition is there then it will become infinite loop
             int mid = start + (end -start)/2;
             if(arr[mid] > arr[mid + 1]){
                 //we are in decreasing part of aray;
