@@ -1,6 +1,6 @@
 package Kunal_DSA_Playlist.BinarySearch;
-//This code is for the array contains no dublicate elements for non distinct elements in array this code will not work
-public class RotatedBinarySearch {
+
+public class RotatedBinarySearchWithDuplicateElements {
     public static void main(String[] args) {
         int[] arr = {4,5,6,7,0,1,2};
         System.out.println(findPivot(arr));
@@ -53,10 +53,7 @@ public class RotatedBinarySearch {
         int end = arr.length - 1;
         while(start <= end){
             int mid = start + (end -start)/2;
-            //4 cases over here
             //case 1
-            //checked mid< end to make sure that we don't get index out of bound error,
-            // like when mid = end then mid+1 becomes index out of bound
             if(mid < end && arr[mid] > arr[mid+1]){
                 return mid; // found the ans
             }
@@ -65,17 +62,31 @@ public class RotatedBinarySearch {
                 return mid-1;
             }
             //case 3
-            //all elements after mid are < start so we are ignoring all those elements by taking only the elements before mid
-            else if( arr[mid] <= arr[start]){
-                end = mid - 1;
+            else if( arr[mid] == arr[start] && arr[mid] == arr[end]){
+                //skip duplicates
+                //but before skipping check whether they are pivot or not
+
+                //checking whether start is pivot
+                if(arr[start] > arr[start +1]){
+                    return start;            //pivot
+                }
+                start++;           //skipping start as it is not the pivot
+
+                //checking whether end is pivot
+                if(arr[end] < arr[end-1]){
+                    return end - 1;          //pivot
+                }
+                end--;         //skipping end as it is not the pivot
             }
             //case 4
-            //if mid was the pivot it would be caught above so definitely more
-            // bigger number exists after the mid so we are searching in the second part of the array so searching after the mid
-            //therefore start = mid + 1
-            else{
-                //if start is < middle element
+            //finding which half of array to check for pivot element
+            else if(arr[start] < arr[mid] || (arr[start] == arr[mid] && arr[mid] > arr[end])){
+                //check in the RHS
                 start = mid + 1;
+            }
+            else {
+                //check in the LHS
+                end = mid - 1;
             }
         }
         return -1;   //pivot not found
